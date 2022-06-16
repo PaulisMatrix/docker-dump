@@ -34,4 +34,6 @@
 
 8. Snyk - Analysing your containers for potential vulnerabilities, fixes, improvements, etc :
 
-    https://snyk.io/docker
+    https://snyk.io/docker 
+
+    https://github.com/snyk/cli
