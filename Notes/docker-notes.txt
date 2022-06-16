@@ -1,0 +1,72 @@
+#build the container
+docker image build -t flask_docker . 
+
+#run the docker container with volumes
+docker run -p 3000:3000 -d -v {source_path}:{dest_path} flask_docker
+
+source_path = Absolute path of the directoy/folder you are mounting.
+dest_path = Path to which you are mounting inside the container.
+
+#passing arguments to docker build
+docker build --build-arg arg=2.3 .
+
+#show output in plain format
+docker image build -t flask_docker . --progress=plain
+
+#go inside the container 
+docker exec -it <container-id> sh or
+docker exec -it <container-id> bash or 
+docker exec -it <container_id> /bin/sh
+
+#stop the container
+docker stop <container-id>
+
+#start the container
+docker start <container-id>
+
+#remove the container
+docker remove <container-id>
+
+#remove the image
+docker rm <image-id>
+
+#list all running containers
+docker ps
+
+#list all containers(started/stopped)
+docker ps -a
+
+#list latest created container
+docker ps -l
+
+#clean all unnecessary items like dangling containers, unused images, logs etc
+docker system prune --all
+
+#Remove unused volumes by executing
+docker volumes prune
+
+#cleaning of workspaces
+docker container rm -f $(docker container ls -aq)
+docker image rm -f  $(docker image ls -q)
+
+#docker-compose
+1. docker-compose build 
+2. docker-compose up (use -d flag to run in the background)
+3. docker-compose down
+4. You can use docker-compose start and stop as well but these commands won't pick
+the changes if you have made in the docker-compose.yml
+
+#delete all containers which we were brought up via docker-compose up
+docker-compose down --rmi all
+
+
+#Note: To show port info 
+lsof -i tcp:<port-id>
+
+My Notes:
+Docker is not natively compatible with macOS,so Hyperkit(hypervisor tool for Mac)is used to run a virtual image. 
+Its virtual image data is located in ~/Library/Containers/com.docker.docker/Data/vms/0
+Within the virtual image, the path is the default Docker path /var/lib/docker.
+
+If you use the default storage driver overlay2, then your Docker images are stored in /var/lib/docker/overlay2.
+There, you can find different files that represent read-only layers of a Docker image and a layer on top of it that contains your changes.
