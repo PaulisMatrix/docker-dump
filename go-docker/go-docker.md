@@ -1,9 +1,9 @@
 # Simple golang webserver using docker
 
-Running a simple golang server using mux inside docker container. 
+Running a simple golang server using gorilla mux inside docker container. 
 
 ## Steps:
-    1. Using mux library to create a router and a handler and passing it to the http.Server
+    1. Using gorilla library to create a router and a handler and passing it to the http.Server
 
     2. Same basics steps to run the container. 
         a. docker build -t go-docker .
