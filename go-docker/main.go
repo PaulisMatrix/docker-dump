@@ -126,9 +126,14 @@ func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
 	w.Write(response)
 }
 
+func healthcheck(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("Hello There!!"))
+}
+
 // Route declaration
 func router() *mux.Router {
 	router := mux.NewRouter()
+	router.HandleFunc("/ping", healthcheck)
 	router.HandleFunc("/albums", getAlbums).Methods("GET")
 	router.HandleFunc("/albums/{id}", getAlbumByID).Methods("GET")
 	router.HandleFunc("/albums", addAlbum).Methods("POST")
