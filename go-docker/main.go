@@ -98,14 +98,15 @@ func updateAlbum(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["id"]
 
-	for index, a := range albums {
+	for index := range albums {
 		// if already present, delete that album
+		a := &albums[index]
 		if a.ID == id {
-			// first remove that album
-			albums = append(albums[:index], albums[index+1:]...)
-
-			//append the album with updated details
-			albums = append(albums, updatedAlbum)
+			//replace in place, instead of appending at the last.
+			a.ID = updatedAlbum.ID
+			a.Title = updatedAlbum.Title
+			a.Artist = updatedAlbum.Artist
+			a.Price = updatedAlbum.Price
 
 			w.Header().Set("Content-Type", "application/json")
 			json.NewEncoder(w).Encode(albums)
