@@ -42,7 +42,7 @@ func getAlbumByID(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-	respondWithError(w, http.StatusBadRequest, "Invalid user ID")
+	respondWithError(w, http.StatusBadRequest, "Invalid user ID or ID not present.")
 }
 
 func addAlbum(w http.ResponseWriter, r *http.Request) {
@@ -117,14 +117,12 @@ func updateAlbum(w http.ResponseWriter, r *http.Request) {
 }
 
 func respondWithError(w http.ResponseWriter, code int, message string) {
-	respondWithJSON(w, code, map[string]string{"error": message})
-}
-
-func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
-	response, _ := json.Marshal(payload)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(code)
-	w.Write(response)
+	resp := make(map[string]string)
+	resp["message"] = message
+	payload, _ := json.Marshal(resp)
+	w.Write(payload)
 }
 
 func healthcheck(w http.ResponseWriter, r *http.Request) {
