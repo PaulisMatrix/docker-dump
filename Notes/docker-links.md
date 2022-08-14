@@ -37,3 +37,8 @@
     https://snyk.io/docker 
 
     https://github.com/snyk/cli
+
+9. Dokter - Analyzer for Dockerfiles in hopes to build faster, more secure, smaller images.
+            Snyk and most container scanning tools happen after the build, and usually in the registry (unless you locally tar), that could potentially expose credentials or an vulnerable image. Dokter aims to prevent building an insecure image (saving CI minutes) and preventing leaking credentials by not building if its known to produce a faulty image.
+    
+    https://gitlab.com/gitlab-org/incubation-engineering/ai-assist/dokter

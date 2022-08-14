@@ -1,0 +1,69 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:latest
+    hostname: redis
+    ports:
+      - 6379:6379
+  rabbitmq:
+    hostname: rabbitmq
+    image: rabbitmq:3-management-alpine
+    ports:
+      - 5672:5672
+      - 15672:15672
+    environment:
+      - RABBIT_MQ_USER=rabbit_mq_user
+      - RABBIT_MQ_PASSWORD=rabbit_mq_user_pass
+      - RABBIT_MQ_HOST=rabbitmq
+      - RABBIT_MQ_VHOST=default_tasks
+      - REDIS_HOST=redis
+
+  flask-docker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    hostname: flask-docker
+    command: [ "gunicorn", "-c", "gunicorn_conf.py", "app:app" ]
+    volumes:
+      #specify volumes here
+      - <src_location>:usr/src/
+    ports:
+      - 3000:3000
+    links:
+      - rabbitmq
+      - redis
+    environment:
+      - RABBIT_MQ_USER=rabbit_mq_user
+      - RABBIT_MQ_PASSWORD=rabbit_mq_user_pass
+      - RABBIT_MQ_HOST=rabbitmq
+      - RABBIT_MQ_VHOST=default_tasks
+      - REDIS_HOST=redis
+
+  celery-worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    hostname: celery-worker
+    command:
+      [
+        "celery",
+        "-A",
+        "app.celery",
+        "worker",
+        "--loglevel=INFO"
+      ]
+    volumes:
+      #specify volumes here
+      - <src_location>:usr/src/
+    links:
+      - rabbitmq
+      - redis
+    depends_on:
+      - rabbitmq
+    environment:
+      - RABBIT_MQ_USER=rabbit_mq_user
+      - RABBIT_MQ_PASSWORD=rabbit_mq_user_pass
+      - RABBIT_MQ_HOST=rabbitmq
+      - RABBIT_MQ_VHOST=default_tasks
+      - REDIS_HOST=redis
