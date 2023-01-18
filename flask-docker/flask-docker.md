@@ -1,48 +1,54 @@
 # Simple flask application using docker
+
 Running my simple python flask application inside a docker container
 
 ### **Please refer below commands to run the application.**
-* Preq : Ofc you need to have docker installed for Mac/Windows/Linux. Please travel to [this link](https://docs.docker.com/get-docker/) for installation.
+
+- Preq : Ofc you need to have docker installed for Mac/Windows/Linux. Please travel to [this link](https://docs.docker.com/get-docker/) for installation.
 
 1. Build the image whose specifications you have mentioned in the Dockerfile. The Dockerfile should be present in the main directory.
 
-    `docker image build -t flask-docker .`
+   `docker image build -t flask-docker .`
 
 2. Now run the image inside a container:
 
-    `docker run -p 3000:3000 flask-docker`
+   `docker run -p 3000:3000 flask-docker`
 
    In detach mode i.e run container in the background:
 
-    `docker run -p 3000:3000 -d flask-docker`
+   `docker run -p 3000:3000 -d flask-docker`
 
    Mounting volumes: This is necessary when you have changes in your files and you don't have to build the image everytime so that those changes will get reflected. Changes will be automatically loaded inside the container.
 
    Add -v flag : -v {source_path}:{dest_path}. Consider absolute paths. So in this case it becomes:
 
-    `docker run -p 3000:3000 -d -v ./docker-dump/flask-docker/:./usr/src/ flask-docker`
+   `docker run -p 3000:3000 -d -v ./docker-dump/flask-docker/:./usr/src/ flask-docker`
 
-3. Head on to ```localhost:3000/hello``` to see magic.
+3. Head on to `localhost:3000/hello` to see magic.
 
 4. Stop the container
 
-    `docker stop <container_id>`
+   `docker stop <container_id>`
 
 5. You can find more docker commands in my Notes folder.
 
+6. "Best" dockerfile for python applications:
+
+   https://luis-sena.medium.com/creating-the-perfect-python-dockerfile-51bdec41f1c8
 
 ### **Compose file to specify different services/dependencies.**
 
-* When you want to run different services which are dependent on eachother, you can specify its settings in a docker-compose.yml file.
+- When you want to run different services which are dependent on eachother, you can specify its settings in a docker-compose.yml file.
 
 Suppose you have a flask app running with celery configured to consume tasks that are being pushed to rabbitmq and redis being used for caching.
 
-Celery acts as both, a producer and a consumer. The producer is called client/publisher and the consumer as workers. 
+Celery acts as both, a producer and a consumer. The producer is called client/publisher and the consumer as workers.
 
 **Setup required**:
-1. Celery setup:
 
-    a. Configuring rabbitmq which we use as a broker to push our tasks to and celery : 
+1.  Celery setup:
+
+    a. Configuring rabbitmq which we use as a broker to push our tasks to and celery :
 
         * Add a user -> rabbitmqctl add_user rabbit_mq_user rabbit_mq_user_pass
 
@@ -62,7 +68,7 @@ Celery acts as both, a producer and a consumer. The producer is called client/pu
 
             4. RABBIT_MQ_VHOST = os.getenv('RABBIT_MQ_VHOST',"")
 
-    b. Configure redis : 
+    b. Configure redis :
 
         * Specify port -> REDIS_PORT = os.getenv("REDIS_PORT", 6379)
 
@@ -72,9 +78,9 @@ Celery acts as both, a producer and a consumer. The producer is called client/pu
 
         * Specify redis namespace/context db -> REDIS_DB = os.getenv("REDIS_CONTEXT_DB", 10)
 
-    c. Refer to the compose file wherein we are settings these variables. 
+    c. Refer to the compose file wherein we are settings these variables.
 
-    d. Few commands : 
+    d. Few commands :
 
         * Start your flask app -> gunicorn -c gunicorn_conf.py app:app
 
@@ -82,13 +88,12 @@ Celery acts as both, a producer and a consumer. The producer is called client/pu
 
         * Use rabbitmq and redis CLI to see your queues/tasks, keys being set resp.
 
-        * After all is set do : 
+        * After all is set do :
 
             1. docker-compose up -> to start all your services.
 
-            2. docker-compose down -> to stop and remove all your services. 
+            2. docker-compose down -> to stop and remove all your services.
 
             3. docker-compose up <service_name> -> to start a specific service.(Pass -d flag to run in the background)
 
             4. You can start and stop without removing containers by using -> docker-compose start/stop
-
