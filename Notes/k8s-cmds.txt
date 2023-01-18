@@ -1,0 +1,32 @@
+#get all contexts:
+kubectl config get-contexts
+
+#use the context 
+kubectl config use-context docker-desktop
+
+#rename context 
+kubectl config rename-context docker-desktop dev 
+
+#apply deployments
+kubectl apply -f deployment.yaml
+
+#scaling replica sets, need to scale your deployment as whole
+kubectl scale deployment <deployment-name> --replicas=0 -n <namespace> -> reset 
+kubectl scale deployment <deployment-name> --replicas=3 -n <namespace> -> scale to 3
+
+#exec into a pod, like docker 
+kubectl exec -it pod/<container_name> /bin/bash
+
+#with the help of the tool kubectx,
+1. switching to other context is as easy this: kubectx docker-desktop
+2. switching to othet namespace is as easy this: kubens docker-desktop-ns
+
+Managing secrets: https://kubernetes.io/docs/tasks/configmap-secret/managing-secret-using-kubectl/ 
+1. kubectl get secrets | grep docker-desktop
+
+2. kubectl get secret docker-desktop -o jsonpath='{.data}'
+
+3. echo <docker-desktop-secret> | base64 --decode (to see the value)
+
+4. Copying secrets from one namespace to another:
+    kubectl get secret docker-desktop --namespace=default --export -o yaml | kubectl apply --namespace=dev -f -
