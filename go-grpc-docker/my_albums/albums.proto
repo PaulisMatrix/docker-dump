@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+option go_package = "go_grpc_docker/my_albums";
+
+package my_albums;
+
+service AlbumService{
+    //define rpcs here
+    rpc GetAlbums(EmptyRequest) returns (MyAlbums){}
+    rpc GetAlbumByID(GetByIDRequest) returns (Album){}
+    rpc AddAlbum(Album) returns (MyAlbums){}
+    rpc UpdateAlbum(Album) returns (MyAlbums){}
+    rpc DeleteAlbum(Album) returns (MyAlbums){}
+}
+
+message EmptyRequest{}
+
+message GetByIDRequest{
+    string id = 1;
+}
+
+message Album{
+    string id = 1;
+    string title = 2;
+    string artist = 3;
+    float price = 4;
+}
+
+message MyAlbums{
+    repeated Album albums = 1;
+}
