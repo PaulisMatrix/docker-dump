@@ -11,6 +11,7 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -23,7 +24,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AlbumServiceClient interface {
 	//define rpcs here
-	GetAlbums(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*MyAlbums, error)
+	GetAlbums(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*MyAlbums, error)
 	GetAlbumByID(ctx context.Context, in *GetByIDRequest, opts ...grpc.CallOption) (*Album, error)
 	AddAlbum(ctx context.Context, in *Album, opts ...grpc.CallOption) (*MyAlbums, error)
 	UpdateAlbum(ctx context.Context, in *Album, opts ...grpc.CallOption) (*MyAlbums, error)
@@ -38,7 +39,7 @@ func NewAlbumServiceClient(cc grpc.ClientConnInterface) AlbumServiceClient {
 	return &albumServiceClient{cc}
 }
 
-func (c *albumServiceClient) GetAlbums(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*MyAlbums, error) {
+func (c *albumServiceClient) GetAlbums(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*MyAlbums, error) {
 	out := new(MyAlbums)
 	err := c.cc.Invoke(ctx, "/my_albums.AlbumService/GetAlbums", in, out, opts...)
 	if err != nil {
@@ -88,7 +89,7 @@ func (c *albumServiceClient) DeleteAlbum(ctx context.Context, in *Album, opts ..
 // for forward compatibility
 type AlbumServiceServer interface {
 	//define rpcs here
-	GetAlbums(context.Context, *EmptyRequest) (*MyAlbums, error)
+	GetAlbums(context.Context, *emptypb.Empty) (*MyAlbums, error)
 	GetAlbumByID(context.Context, *GetByIDRequest) (*Album, error)
 	AddAlbum(context.Context, *Album) (*MyAlbums, error)
 	UpdateAlbum(context.Context, *Album) (*MyAlbums, error)
@@ -100,7 +101,7 @@ type AlbumServiceServer interface {
 type UnimplementedAlbumServiceServer struct {
 }
 
-func (UnimplementedAlbumServiceServer) GetAlbums(context.Context, *EmptyRequest) (*MyAlbums, error) {
+func (UnimplementedAlbumServiceServer) GetAlbums(context.Context, *emptypb.Empty) (*MyAlbums, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAlbums not implemented")
 }
 func (UnimplementedAlbumServiceServer) GetAlbumByID(context.Context, *GetByIDRequest) (*Album, error) {
@@ -129,7 +130,7 @@ func RegisterAlbumServiceServer(s grpc.ServiceRegistrar, srv AlbumServiceServer)
 }
 
 func _AlbumService_GetAlbums_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(EmptyRequest)
+	in := new(emptypb.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -141,7 +142,7 @@ func _AlbumService_GetAlbums_Handler(srv interface{}, ctx context.Context, dec f
 		FullMethod: "/my_albums.AlbumService/GetAlbums",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AlbumServiceServer).GetAlbums(ctx, req.(*EmptyRequest))
+		return srv.(AlbumServiceServer).GetAlbums(ctx, req.(*emptypb.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }

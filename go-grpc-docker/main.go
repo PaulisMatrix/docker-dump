@@ -6,9 +6,7 @@ import (
 	"go_grpc_docker/client"
 	models "go_grpc_docker/models"
 	pb "go_grpc_docker/my_albums"
-	server "go_grpc_docker/server"
 	"log"
-	"net"
 	"net/http"
 	"reflect"
 	"regexp"
@@ -17,6 +15,7 @@ import (
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
+	"google.golang.org/protobuf/types/known/emptypb"
 )
 
 const address string = ":4772"
@@ -36,7 +35,7 @@ func (s *serverHandler) getAlbums(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 
-	myAlbums, err := s.client.GetAlbums(s.context, &pb.EmptyRequest{})
+	myAlbums, err := s.client.GetAlbums(s.context, &emptypb.Empty{})
 	if err != nil {
 		log.Fatal("Error in getting response from server", err)
 	}
@@ -227,21 +226,23 @@ func router() *http.ServeMux {
 
 // Initiate web server
 func main() {
-	go func() {
-		log.Println("grpc server starting on: 4772")
-		lis, err := net.Listen("tcp", ":4772")
-		if err != nil {
-			log.Fatal("Failed to Listen on", err)
-		}
+	/*
+		go func() {
+			log.Println("grpc server starting on: 4772")
+			lis, err := net.Listen("tcp", ":4772")
+			if err != nil {
+				log.Fatal("Failed to Listen on", err)
+			}
 
-		grpcServer := grpc.NewServer()
+			grpcServer := grpc.NewServer()
 
-		pb.RegisterAlbumServiceServer(grpcServer, &server.MyAlbumServer{})
+			pb.RegisterAlbumServiceServer(grpcServer, &server.MyAlbumServer{})
 
-		if err := grpcServer.Serve(lis); err != nil {
-			log.Fatalf("failed to serve: %v", err)
-		}
-	}()
+			if err := grpcServer.Serve(lis); err != nil {
+				log.Fatalf("failed to serve: %v", err)
+			}
+		}()
+	*/
 	time.Sleep(time.Second) //wait for server to start.
 	router := router()
 	log.Println("Web server starting on: 3000")

@@ -1,4 +1,5 @@
 syntax = "proto3";
+import "google/protobuf/empty.proto";
 
 option go_package = "go_grpc_docker/my_albums";
 
@@ -6,7 +7,7 @@ package my_albums;
 
 service AlbumService{
     //define rpcs here
-    rpc GetAlbums(EmptyRequest) returns (MyAlbums){}
+    rpc GetAlbums(google.protobuf.Empty) returns (MyAlbums){}
     rpc GetAlbumByID(GetByIDRequest) returns (Album){}
     rpc AddAlbum(Album) returns (MyAlbums){}
     rpc UpdateAlbum(Album) returns (MyAlbums){}

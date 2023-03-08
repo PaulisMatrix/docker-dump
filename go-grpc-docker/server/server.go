@@ -1,10 +1,16 @@
-package server
+package main
 
 import (
 	"context"
 	models "go_grpc_docker/models"
 	pb "go_grpc_docker/my_albums"
 	"log"
+	"net"
+	"os"
+	"os/signal"
+
+	"google.golang.org/grpc"
+	"google.golang.org/protobuf/types/known/emptypb"
 )
 
 type MyAlbumServer struct {
@@ -21,7 +27,7 @@ func ConvertToProto(albums models.Album) *pb.Album {
 	return r
 }
 
-func (server *MyAlbumServer) GetAlbums(ctx context.Context, req *pb.EmptyRequest) (*pb.MyAlbums, error) {
+func (server *MyAlbumServer) GetAlbums(ctx context.Context, e *emptypb.Empty) (*pb.MyAlbums, error) {
 	albums := make([]*pb.Album, len(models.Albums))
 
 	for i, a := range models.Albums {
@@ -102,4 +108,40 @@ func (server *MyAlbumServer) DeleteAlbum(ctx context.Context, req *pb.Album) (*p
 	}
 
 	return nil, nil
+}
+
+func main() {
+
+	log.Println("grpc server starting on: 4772")
+	lis, err := net.Listen("tcp", ":4772")
+	if err != nil {
+		log.Fatal("Failed to Listen on", err)
+	}
+
+	// in case client cancels the context
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	grpcServer := grpc.NewServer()
+
+	pb.RegisterAlbumServiceServer(grpcServer, &MyAlbumServer{})
+
+	if err := grpcServer.Serve(lis); err != nil {
+		log.Fatalf("failed to serve: %v", err)
+	}
+
+	// graceful shutdown
+	c := make(chan os.Signal, 1)
+	signal.Notify(c, os.Interrupt)
+	go func() {
+		for range c {
+			// sig is a ^C, handle it
+			log.Println("shutting down gRPC server...")
+
+			grpcServer.GracefulStop()
+
+			<-ctx.Done()
+		}
+	}()
+
 }

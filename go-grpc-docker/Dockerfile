@@ -37,9 +37,11 @@ RUN protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_o
 
 RUN go mod download && go mod tidy
 
-# switch to main dir
+# main dir
 WORKDIR /usr/src/app 
 
-RUN CGO_ENABLED=0 go build -o go-grpc-docker main.go
+RUN CGO_ENABLED=0 go build -o server ./server/server.go
 
-CMD ["/go-grpc-docker"]
+RUN CGO_ENABLED=0 go build -o client main.go
+
+CMD ["./server", "./client"]
