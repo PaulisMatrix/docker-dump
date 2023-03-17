@@ -42,3 +42,13 @@
             Snyk and most container scanning tools happen after the build, and usually in the registry (unless you locally tar), that could potentially expose credentials or an vulnerable image. Dokter aims to prevent building an insecure image (saving CI minutes) and preventing leaking credentials by not building if its known to produce a faulty image.
     
     https://gitlab.com/gitlab-org/incubation-engineering/ai-assist/dokter
+
+
+10. Podman - Alternative for docker by RedHat: https://www.redhat.com/en/topics/containers/what-is-podman 
+
+11. Kraken - P2P docker registry, an alternative to Docker Hub by Uber: https://github.com/uber/kraken, https://uber-kraken.readthedocs.io/en/latest/ 
+
+12. Colima - Container runtime, an alternative for Docker Desktop: https://github.com/abiosoft/colima , https://medium.com/javarevisited/free-docker-desktop-alternative-for-mac-c3845d8a2345
+
+
+
