@@ -39,6 +39,7 @@
 7.  Navigate to `localhost:30001/hello`. 30001 is the nodeport in the service manifest we have defined for our flask app pods.
 
 8.  Teardown your application: 
-    ```❯ kubectl delete -f flask-deployment.yaml
+    ```
+    ❯ kubectl delete -f flask-deployment.yaml
         deployment.apps "flask-demo" deleted
         service "flask-entrypoint" deleted
