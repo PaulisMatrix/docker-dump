@@ -13,3 +13,8 @@
 3. Kuberenetes IDE: https://k8slens.dev/
 
 4. Tool to manage contexts and namspaces: https://github.com/ahmetb/kubectx
+
+5. How deployment, service and ingress in a normal kubernetes setup are related to eachother:<br>
+   a. https://dwdraju.medium.com/how-deployment-service-ingress-are-related-in-their-manifest-a2e553cf0ffb<br>
+   b. Basically you have your deployment pods, on top of that you define a service which acts like a common entry
+      point for all your pods. Then define ingress on top service to define your incoming traffic.
