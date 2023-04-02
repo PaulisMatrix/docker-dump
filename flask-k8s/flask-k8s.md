@@ -37,7 +37,8 @@
         Dockerfile  app  docker-compose.yml  flask-docker.md  python.Dockerfile  requirements.txt
 
 7.  Navigate to `localhost:30001/hello`. 30001 is the nodeport in the service manifest we have defined for our flask app pods.
-   
-   
-    
-    
+
+8.  Teardown your application: 
+    ```❯ kubectl delete -f flask-deployment.yaml
+        deployment.apps "flask-demo" deleted
+        service "flask-entrypoint" deleted
