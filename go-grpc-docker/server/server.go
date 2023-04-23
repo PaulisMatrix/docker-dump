@@ -8,6 +8,7 @@ import (
 	"net"
 	"os"
 	"os/signal"
+	"syscall"
 
 	"google.golang.org/grpc"
 	"google.golang.org/protobuf/types/known/emptypb"
@@ -119,29 +120,28 @@ func main() {
 	}
 
 	// in case client cancels the context
-	ctx, cancel := context.WithCancel(context.Background())
+	_, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
 	grpcServer := grpc.NewServer()
 
 	pb.RegisterAlbumServiceServer(grpcServer, &MyAlbumServer{})
 
-	if err := grpcServer.Serve(lis); err != nil {
-		log.Fatalf("failed to serve: %v", err)
-	}
+	go func(lis net.Listener) {
+		if err := grpcServer.Serve(lis); err != nil {
+			log.Fatalf("Failed to serve: %v", err)
+		}
+	}(lis)
 
 	// graceful shutdown
 	c := make(chan os.Signal, 1)
-	signal.Notify(c, os.Interrupt)
-	go func() {
-		for range c {
-			// sig is a ^C, handle it
-			log.Println("shutting down gRPC server...")
+	signal.Notify(c, syscall.SIGINT, syscall.SIGTERM)
 
-			grpcServer.GracefulStop()
+	<-c
+	log.Println("Shutting down gRPC server...")
 
-			<-ctx.Done()
-		}
-	}()
+	grpcServer.GracefulStop()
+
+	log.Println("Exited...")
 
 }
