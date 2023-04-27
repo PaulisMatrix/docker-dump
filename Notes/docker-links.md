@@ -32,11 +32,13 @@
 
     https://github.com/wagoodman/dive
 
-8. Snyk - Analysing your containers for potential vulnerabilities, fixes, improvements, etc :
+8. Tools for analysing your containers for potential vulnerabilities, fixes, improvements, etc :
 
-    https://snyk.io/docker 
+    1.  https://snyk.io/docker 
 
-    https://github.com/snyk/cli
+    2.  https://github.com/snyk/cli
+
+    3.  https://github.com/anchore/grype
 
 9. Dokter - Analyzer for Dockerfiles in hopes to build faster, more secure, smaller images.
             Snyk and most container scanning tools happen after the build, and usually in the registry (unless you locally tar), that could potentially expose credentials or an vulnerable image. Dokter aims to prevent building an insecure image (saving CI minutes) and preventing leaking credentials by not building if its known to produce a faulty image.
@@ -46,9 +48,12 @@
 
 10. Podman - Alternative for docker by RedHat: https://www.redhat.com/en/topics/containers/what-is-podman 
 
-11. Kraken - P2P docker registry, an alternative to Docker Hub by Uber: https://github.com/uber/kraken, https://uber-kraken.readthedocs.io/en/latest/ 
+11. Kraken - P2P docker registry, an alternative to Docker Hub by Uber: 
 
-12. Colima - Container runtime, an alternative for Docker Desktop: https://github.com/abiosoft/colima , https://medium.com/javarevisited/free-docker-desktop-alternative-for-mac-c3845d8a2345
+    1.  https://github.com/uber/kraken 
+    2.  https://uber-kraken.readthedocs.io/en/latest/ 
 
+12. Colima - Container runtime, an alternative for Docker Desktop: 
 
-
+    1.  https://github.com/abiosoft/colima
+    2.  https://medium.com/javarevisited/free-docker-desktop-alternative-for-mac-c3845d8a2345

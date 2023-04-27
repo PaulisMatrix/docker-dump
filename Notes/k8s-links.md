@@ -15,6 +15,11 @@
 4. Tool to manage contexts and namspaces: https://github.com/ahmetb/kubectx
 
 5. How deployment, service and ingress in a normal kubernetes setup are related to eachother:<br>
+
    a. https://dwdraju.medium.com/how-deployment-service-ingress-are-related-in-their-manifest-a2e553cf0ffb<br>
    b. Basically you have your deployment pods, on top of that you define a service which acts like a common entry
       point for all your pods. Then define ingress on top service to define your incoming traffic.
+
+6. Help discover deprecated api versions for k8s: https://github.com/FairwindsOps/pluto
+
+7. K8s cluster autoscaler: https://github.com/aws/karpenter (only aws exclusive)
