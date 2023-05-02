@@ -20,6 +20,9 @@
    b. Basically you have your deployment pods, on top of that you define a service which acts like a common entry
       point for all your pods. Then define ingress on top service to define your incoming traffic.
 
-6. Help discover deprecated api versions for k8s: https://github.com/FairwindsOps/pluto
+6. Help discover deprecated api versions for k8s:
+ 
+   a. https://github.com/FairwindsOps/pluto<br>
+   b. https://github.com/doitintl/kube-no-trouble
 
 7. K8s cluster autoscaler: https://github.com/aws/karpenter (only aws exclusive)
