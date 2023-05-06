@@ -4,7 +4,7 @@ metadata:
   name: flask-demo
   namespace: default
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: flask-demo
@@ -21,13 +21,35 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: flask-entrypoint
+  name: flask-service
   namespace: default
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     app: flask-demo
   ports:
-  - port: 3000
-    targetPort: 3000
-    nodePort: 30001
+    - name: http
+      port: 3000
+      targetPort: 3000
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: flask-ingress
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  ingressClassName: nginx-1-4-0
+  rules:
+    - host: flask-demo.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: flask-service
+                port:
+                  name: http

@@ -43,3 +43,27 @@
     ❯ kubectl delete -f flask-deployment.yaml
         deployment.apps "flask-demo" deleted
         service "flask-entrypoint" deleted
+
+9.  Adding ingress to the app. 
+
+    Suppose this is the IP resolution for our website `https://flask-demo.com/` (For example purposes only.)
+    ```
+        Non-authoritative answer:
+        Name:	flask-demo.com
+        Address: 130.211.24.50
+    ```
+    Now how is the request actually routed? 
+
+    a.  When you hit `https://flask-demo.com/`, whatever DNS provider you are using, resolves this hostname to its public IP address
+        which is `130.211.24.50` in this case.<br>
+    b.  The DNS server then routes this request to its appropriate destination which is the ingress controller service inside your
+        kubernetes cluster.<br>
+    c.  Kubernetes ensures that requests from this IP address is passed to your cluster by setting up a network route between the
+        public IP address and the ingress controller service.<br>
+    d.  This is typically done by setting up a load balancer or reverse proxy(like nginx) that listens on the public IP address and
+        forwards the incoming request to the ingress controller service inside the k8s cluster.
+        (After setting it up, you link this proxying under ingress class in your ingress resource yaml file). <br>
+    e.  When the ingress controller receives a request from the public IP address, it uses the rules defined in the ingress resource
+        yaml file to determine to which service backend and endpoint should handle the request.<br>
+    f.  The request is then forwarded to the appropriate service and endpoint within the cluster, which is basically your flask demo app.
+
