@@ -26,3 +26,15 @@
    b. https://github.com/doitintl/kube-no-trouble
 
 7. K8s cluster autoscaler: https://github.com/aws/karpenter (only aws exclusive)
+
+8. etcd which is the k8s distributed kv store maintaining all the relevant state of k8s resources uses Raft algorithm for
+   managing this data across the cluster.
+
+   Raft algorithm: <br>
+   a. https://raft.github.io/<br>
+   b. https://kubernetes.io/blog/2019/08/30/announcing-etcd-3-4/
+
+9. Walks through kubernetes internals: https://book.kubebuilder.io/introduction.html
+   
+
+
