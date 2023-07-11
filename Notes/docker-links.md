@@ -8,6 +8,10 @@
 
     https://kapeli.com/cheat_sheets/Dockerfile.docset/Contents/Resources/Documents/index
 
+    https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
+
+    https://dockerlabs.collabnix.com/docker/cheatsheet/
+
 2. Docker commands:
 
     https://gist.github.com/bradtraversy/89fad226dc058a41b596d586022a9bd3
