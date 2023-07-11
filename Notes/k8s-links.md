@@ -35,6 +35,45 @@
    b. https://kubernetes.io/blog/2019/08/30/announcing-etcd-3-4/
 
 9. Walks through kubernetes internals: https://book.kubebuilder.io/introduction.html
+
+10. Awesome k8s: https://github.com/ramitsurana/awesome-kubernetes
+
+11. K8s networking guide: https://www.tkng.io/
+
+12. Kubernetes talks:
+
+    a. Overview of k8s: https://www.youtube.com/watch?v=WwBdNXt6wO4 
+    
+    b. Containers from scratch:
+    
+        a. https://youtu.be/_TsSmSu57Zo
+          
+        b. https://youtu.be/8fi7uSYlOdc
+    
+    c. Kelsey Hightower talks:
+    
+        a. Reflections: https://youtu.be/jiaLsxjBeOQ
+
+        b. Schedular from scratch: https://youtu.be/IYcL0Un1io0
+
+    d. Kubernetes Deconstructed: https://youtu.be/90kZRyPcRZw
+  
+    e. Envoy Internals: https://youtu.be/gQF23Vw0keg
+   
+    f. CoreDNS(Which handles DNS resolutions and all for k8s) : https://youtu.be/qRiLmLACYSY
+    
+    g. Kubernetes design principles: https://youtu.be/ZuIQurh_kDk
+
+    h. Kubernetes networking: https://youtu.be/0Omvgd7Hg1I
+    
+    i. About Kubernetes Storage:
+    
+        a. https://youtu.be/uSxlgK1bCuA
+          
+        b. https://youtu.be/hqE5c5pyfrk
+ 
+    
+
    
 
 
