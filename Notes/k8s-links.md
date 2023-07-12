@@ -31,8 +31,10 @@
    managing this data across the cluster.
 
    Raft algorithm: <br>
-   a. https://raft.github.io/<br>
-   b. https://kubernetes.io/blog/2019/08/30/announcing-etcd-3-4/
+         1. https://raft.github.io/<br>
+         2. https://kubernetes.io/blog/2019/08/30/announcing-etcd-3-4/<br>
+         3. https://developer.hashicorp.com/consul/docs/architecture/consensus<br>
+         4. Raft demonstration: https://thesecretlivesofdata.com/raft/
 
 9. Walks through kubernetes internals: https://book.kubebuilder.io/introduction.html
 
@@ -44,17 +46,13 @@
 
     a. Overview of k8s: https://www.youtube.com/watch?v=WwBdNXt6wO4 
     
-    b. Containers from scratch:
+    b. Containers from scratch:<br>
+          1. https://youtu.be/_TsSmSu57Zo<br>
+          2. https://youtu.be/8fi7uSYlOdc
     
-        a. https://youtu.be/_TsSmSu57Zo
-          
-        b. https://youtu.be/8fi7uSYlOdc
-    
-    c. Kelsey Hightower talks:
-    
-        a. Reflections: https://youtu.be/jiaLsxjBeOQ
-
-        b. Schedular from scratch: https://youtu.be/IYcL0Un1io0
+    c. Kelsey Hightower talks:<br>
+           1. Reflections: https://youtu.be/jiaLsxjBeOQ<br>
+           2. Schedular from scratch: https://youtu.be/IYcL0Un1io0
 
     d. Kubernetes Deconstructed: https://youtu.be/90kZRyPcRZw
   
@@ -66,14 +64,6 @@
 
     h. Kubernetes networking: https://youtu.be/0Omvgd7Hg1I
     
-    i. About Kubernetes Storage:
-    
-        a. https://youtu.be/uSxlgK1bCuA
-          
-        b. https://youtu.be/hqE5c5pyfrk
- 
-    
-
-   
-
-
+    i. About Kubernetes Storage:<br>
+          1. https://youtu.be/uSxlgK1bCuA<br>
+          2. https://youtu.be/hqE5c5pyfrk
