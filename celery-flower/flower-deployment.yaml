@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: celery-flower
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: celery-flower
+  template:
+    metadata:
+      name: celery-flower
+      labels:
+        app: celery-flower
+    spec:
+      containers:
+        - name: celery-flower
+          image: celery-flower-image
+          ports:
+            - containerPort: 5566
+              protocol: TCP
+          command:
+            - celery
+            - '-A'
+            - app.celery
+            - '--broker=$(BROKER_URL)'
+            - flower
+            - '--address=0.0.0.0'
+            - '--port=5566'
+            - '--basic_auth=flower_user:flower_pass'
+            - '--broker_api=$(BROKER_API)'
+          env:
+            - name: RABBITMQ_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: rabbitmq-credentials
+                  key: host
+            - name: RABBITMQ_USER
+              valueFrom:
+                secretKeyRef:
+                  name: rabbitmq-credentials
+                  key: username
+            - name: RABBITMQ_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: rabbitmq-credentials
+                  key: password
+            - name: REDIS_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: redis-credentials
+                  key: host
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: redis-credentials
+                  key: password
+            - name: BROKER_URL
+              value: 'amqp://$(RABBITMQ_USER):$(RABBITMQ_PASS)@$(RABBITMQ_HOST)/default_tasks'
+            - name: BROKER_API
+              value: 'http://$(RABBITMQ_USER):$(RABBITMQ_PASS)@$(RABBITMQ_HOST):15672/api/'
+          resources:
+            limits:
+              cpu: 200m
+              memory: 1Gi
+            requests:
+              cpu: 10m
+              memory: 400Mi
+          imagePullPolicy: Never
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 1
+  progressDeadlineSeconds: 600
